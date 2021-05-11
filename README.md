@@ -42,3 +42,11 @@ protoc calculator/calculatorpb/calculator.proto --go-grpc_out=.
 
 ### Syntax
 
+
+## Section 03.1 - Setup server
+
+Video: https://www.youtube.com/watch?v=HMTz0-qjpgk&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=3 
+
+Code generate từ protobuf đã khác so với video 
+
+
