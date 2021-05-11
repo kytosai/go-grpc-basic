@@ -5,6 +5,8 @@ Source: https://github.com/nkchuong1607/grpc_course
 
 ## Section 02 - Setup môi trường, generate code - The Funzy Dev 
 
+### Install
+
 Slider: https://docs.google.com/presentation/d/19zCPlujW2NIvUzG5NZFKqCIJmfyINoTasNtpsFSiQKo/edit#slide=id.p 
 
 Install protobuf on MacOS 
@@ -37,3 +39,6 @@ Câu lệnh generate đổi thành
 ```sh
 protoc calculator/calculatorpb/calculator.proto --go-grpc_out=.
 ```
+
+### Syntax
+
