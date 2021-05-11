@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net"
 
@@ -29,7 +28,7 @@ func main() {
 		&server{},
 	)
 
-	fmt.Println("calculator is running...")
+	log.Println("calculator is running...")
 
 	err = s.Serve(lis)
 

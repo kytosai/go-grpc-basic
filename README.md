@@ -49,4 +49,8 @@ Video: https://www.youtube.com/watch?v=HMTz0-qjpgk&list=PLC4c48H3oDRwlqUfUYfjdWH
 
 Code generate từ protobuf đã khác so với video 
 
+## Section 03.2 - Client
 
+gRPC recommend chúng ta khi connect tới nhau nên sử dụng SSL để đảm bảo an toàn -> tuy nhiên trong video demo chưa cần dùng nên khi connect tới server ta dùng `grpc.WithInsecure()` -> không an toàn
+
+**LƯU Ý** khi viết `Makefile` cần sử dụng định dạng `tab` để thụt lùi code thay vì `space` nếu không sẽ gây bug không sử dụng được lệnh `make xxx`
