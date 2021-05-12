@@ -62,7 +62,7 @@ gRPC recommend chúng ta khi connect tới nhau nên sử dụng SSL để đả
   - 1 file chứa client and server code (file `xxx_grpc.pb.go`)
 - Doc gốc: https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code
 
-## Section 05 -  Server Streaming API 
+## Section 05 - Server Streaming API 
 
 - Slider: https://docs.google.com/presentation/d/1QG0hmkzQDRzeNgE0AYRewoaEiL2wbNLAfSLugDqpIzo/edit#slide=id.p 
 
@@ -81,3 +81,8 @@ gRPC recommend chúng ta khi connect tới nhau nên sử dụng SSL để đả
 - Số nguyên tố (prime number): là số tự nhiên lớn hơn 1 không phải là tích của hai số tự nhiên nhỏ hơn. Nói cách khác, số nguyên tố là những số chỉ có đúng hai ước số là 1 và chính nó. Các số tự nhiên lớn hơn 1 không phải là số nguyên tố được gọi là hợp số
 - Ước số: Mô tả rõ hơn thì khi một số tự nhiên A được gọi là ước số của số tự nhiên B nếu B chia hết cho A.
   - Ví dụ: 6 chia hết được cho [1,2,3,6], thì [1,2,3,6] được gọi là ước số của 6.
+
+## Section 06 - Client Streaming API 
+
+**Đề bài** thực hiện tính trung bình cho 1 dãy số
+VD: input vào là [5,10,12,3,4.2] => kết quả là 6.48
