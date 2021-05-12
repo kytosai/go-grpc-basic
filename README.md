@@ -54,3 +54,12 @@ Code generate từ protobuf đã khác so với video
 gRPC recommend chúng ta khi connect tới nhau nên sử dụng SSL để đảm bảo an toàn -> tuy nhiên trong video demo chưa cần dùng nên khi connect tới server ta dùng `grpc.WithInsecure()` -> không an toàn
 
 **LƯU Ý** khi viết `Makefile` cần sử dụng định dạng `tab` để thụt lùi code thay vì `space` nếu không sẽ gây bug không sử dụng được lệnh `make xxx`
+
+## Section 04 - Unary API  
+
+**LƯU Ý VỀ PHẦN GENERATE FILE PROTO**
+- Theo chuẩn mới của generate code golang cho grpc sẽ có 2 file
+  - 1 file chứa type, struct,... (file `xxx.pb.go`)
+  - 1 file chứa client and server code (file `xxx_grpc.pb.go`)
+- Doc gốc: https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code
+

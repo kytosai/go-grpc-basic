@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 
@@ -10,9 +11,21 @@ import (
 )
 
 type server struct {
-	// ? khúc này đang xử lý khác video:
-	// ? vì probuf code gen ra đã có impl thêm func
+	// ! khúc này đang xử lý khác video:
+	// ! vì probuf code gen ra đã có impl thêm func
+	// ! nên cần đưa các thông tin của interface vào đầy đủ
 	calculatorpb.CalculatorServiceServer
+}
+
+func (s *server) Sum(
+	ctx context.Context,
+	req *calculatorpb.SumRequest,
+) (*calculatorpb.SumResponse, error) {
+	resp := calculatorpb.SumResponse{
+		Result: req.GetNum1() + req.GetNum2(),
+	}
+
+	return &resp, nil
 }
 
 func main() {

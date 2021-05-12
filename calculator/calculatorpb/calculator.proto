@@ -4,4 +4,19 @@ package calculator;
 
 option go_package="calculator/calculatorpb";
 
-service CalculatorService {}
+/*
+  Số 1,2 trong cuối num1,num2 có nghĩa là số thứ tự
+  vị trí param trong method proto sẽ generate ra
+*/
+message SumRequest {
+  int32 num1 = 1;
+  int32 num2 = 2;
+}
+
+message SumResponse { 
+  int32 result = 1;
+}
+
+service CalculatorService {
+  rpc Sum(SumRequest) returns (SumResponse) {}
+}
