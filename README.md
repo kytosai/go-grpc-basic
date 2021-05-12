@@ -1,7 +1,7 @@
 # Go gRPC basic
 
-Video: https://www.youtube.com/watch?v=UScWGktlIng&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=2 
-Source: https://github.com/nkchuong1607/grpc_course
+- Video: https://www.youtube.com/watch?v=UScWGktlIng&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=2 
+- Source: https://github.com/nkchuong1607/grpc_course
 
 ## Section 02 - Setup môi trường, generate code - The Funzy Dev 
 
@@ -40,9 +40,6 @@ Câu lệnh generate đổi thành
 protoc calculator/calculatorpb/calculator.proto --go-grpc_out=.
 ```
 
-### Syntax
-
-
 ## Section 03.1 - Setup server
 
 Video: https://www.youtube.com/watch?v=HMTz0-qjpgk&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=3 
@@ -57,9 +54,30 @@ gRPC recommend chúng ta khi connect tới nhau nên sử dụng SSL để đả
 
 ## Section 04 - Unary API  
 
+- Unary api: 1 request từ client lên sẽ có 1 response trả về từ server, tương tự như HTTP request 
+
 **LƯU Ý VỀ PHẦN GENERATE FILE PROTO**
 - Theo chuẩn mới của generate code golang cho grpc sẽ có 2 file
   - 1 file chứa type, struct,... (file `xxx.pb.go`)
   - 1 file chứa client and server code (file `xxx_grpc.pb.go`)
 - Doc gốc: https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code
 
+## Section 05 -  Server Streaming API 
+
+- Slider: https://docs.google.com/presentation/d/1QG0hmkzQDRzeNgE0AYRewoaEiL2wbNLAfSLugDqpIzo/edit#slide=id.p 
+
+- Server streaming api: có nghĩa là client gửi lên 1 request và nhận về nhiều response 
+  - VD: giống nhu news feed của facebook, cứ đẩy thông tin về và hiển thị,...
+
+- Video: https://www.youtube.com/watch?v=bJA99UJPZnk&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=6 
+
+### Đề bài
+
+**Mô tả**
+- Làm về bài toán `prime number decomposition` -> nhập vào 1 con số, tìm 1 dãy số nguyên tố nhân lại với nhau tạo ra được số mình nhập
+- VD: input là số 120. Kết quả trả ra là danh sách các số `2 * 2 * 2 * 3 * 5` là đúng
+
+**Phân tích:**
+- Số nguyên tố (prime number): là số tự nhiên lớn hơn 1 không phải là tích của hai số tự nhiên nhỏ hơn. Nói cách khác, số nguyên tố là những số chỉ có đúng hai ước số là 1 và chính nó. Các số tự nhiên lớn hơn 1 không phải là số nguyên tố được gọi là hợp số
+- Ước số: Mô tả rõ hơn thì khi một số tự nhiên A được gọi là ước số của số tự nhiên B nếu B chia hết cho A.
+  - Ví dụ: 6 chia hết được cho [1,2,3,6], thì [1,2,3,6] được gọi là ước số của 6.

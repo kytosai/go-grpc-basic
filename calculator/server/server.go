@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"time"
 
 	"gogrpcbasic/calculator/calculatorpb"
 
@@ -17,7 +18,7 @@ type server struct {
 	calculatorpb.CalculatorServiceServer
 }
 
-func (s *server) Sum(
+func (*server) Sum(
 	ctx context.Context,
 	req *calculatorpb.SumRequest,
 ) (*calculatorpb.SumResponse, error) {
@@ -26,6 +27,34 @@ func (s *server) Sum(
 	}
 
 	return &resp, nil
+}
+
+func (*server) PrimeNumberDecomposition(
+	req *calculatorpb.PNDRequest,
+	stream calculatorpb.CalculatorService_PrimeNumberDecompositionServer,
+) error {
+	log.Println("PrimeNumberDecomposition called...")
+
+	k := int32(2)
+	N := req.GetNumber()
+
+	for N > 1 {
+		if N%k == 0 {
+			N = N / k
+
+			// Send data to client
+			stream.Send(&calculatorpb.PNDResponse{
+				Result: k,
+			})
+
+			time.Sleep(time.Second)
+		} else {
+			k++
+			log.Printf("k increase to %v", k)
+		}
+	}
+
+	return nil
 }
 
 func main() {
@@ -41,7 +70,7 @@ func main() {
 		&server{},
 	)
 
-	log.Println("calculator is running...")
+	log.Println("calculator server is running...")
 
 	err = s.Serve(lis)
 
