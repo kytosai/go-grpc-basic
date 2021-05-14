@@ -86,3 +86,8 @@ gRPC recommend chúng ta khi connect tới nhau nên sử dụng SSL để đả
 
 **Đề bài** thực hiện tính trung bình cho 1 dãy số
 VD: input vào là [5,10,12,3,4.2] => kết quả là 6.48
+
+## section 07 - Bi-Directional Streaming API
+
+**Đề bài** tìm con số lớn nhất, client sẽ gửi lên dãy số và server trả về số lớn nhất trong dãy số đó
+  - VD: client bắn liên tục dãy số [5,10,12,3,4] -> thì phía server tính toán sau mỗi lần nhận message từ client sẽ trả ra là [5,10,12,12,12]

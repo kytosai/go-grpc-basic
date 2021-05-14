@@ -22,7 +22,8 @@ func main() {
 	// Call api from server
 	// callSum(client)
 	// callPND(client)
-	callAverage(client)
+	// callAverage(client)
+	callFindMax(client)
 
 	// "%f"	decimal point but no exponent (số mũ), e.g. 123.456
 	// log.Printf("service client %f", client)
@@ -106,4 +107,70 @@ func callAverage(c calculatorpb.CalculatorServiceClient) {
 	}
 
 	log.Printf("average result %v", resp.GetResult())
+}
+
+func callFindMax(c calculatorpb.CalculatorServiceClient) {
+	log.Println("calling FindMax()...")
+
+	stream, err := c.FindMax(context.TODO())
+	if err != nil {
+		log.Fatalf("call FindMax() err %v", err)
+	}
+
+	waitc := make(chan struct{})
+
+	go func() {
+		// Send multi request
+		listReq := []calculatorpb.FindMaxRequest{
+			{
+				Num: 5,
+			},
+			{
+				Num: 10,
+			},
+			{
+				Num: 12,
+			},
+			{
+				Num: 3,
+			},
+			{
+				Num: 4,
+			},
+		}
+
+		for _, req := range listReq {
+			err := stream.Send(&req)
+			if err != nil {
+				log.Fatalf("send FindMax() request err %v", err)
+			}
+			time.Sleep(time.Second)
+		}
+
+		stream.CloseSend()
+	}()
+
+	go func() {
+		// Receive multi request
+		for {
+			resp, err := stream.Recv()
+			if err == io.EOF {
+				log.Println("ending FindMax() api!")
+				break
+			}
+
+			if err != nil {
+				log.Fatalf("recv find max request err %v", err)
+				break
+			}
+
+			log.Printf("max: %v", resp.GetMax())
+		}
+
+		close(waitc)
+	}()
+
+	// neo chờ để tránh chương trình gọi 2 goroutine trên
+	// xong lại stop ngay lập tức
+	<-waitc
 }
