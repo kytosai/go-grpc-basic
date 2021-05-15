@@ -12,6 +12,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
 )
 
@@ -177,7 +178,19 @@ func main() {
 		log.Fatalf("err while create listen %v", err)
 	}
 
-	s := grpc.NewServer()
+	// Setup SSL for server
+	certFile := "ssl/server.crt"
+	keyFile := "ssl/server.pem"
+
+	creds, sslErr := credentials.NewServerTLSFromFile(certFile, keyFile)
+	if sslErr != nil {
+		log.Fatalf("create cred ssl err %v\n", sslErr)
+		return
+	}
+	opts := grpc.Creds(creds)
+
+	// Create new server
+	s := grpc.NewServer(opts)
 
 	calculatorpb.RegisterCalculatorServiceServer(
 		s,
@@ -186,6 +199,7 @@ func main() {
 
 	log.Println("calculator server is running...")
 
+	// Start server
 	err = s.Serve(lis)
 
 	if err != nil {
