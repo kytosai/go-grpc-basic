@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func main() {
@@ -23,7 +25,8 @@ func main() {
 	// callSum(client)
 	// callPND(client)
 	// callAverage(client)
-	callFindMax(client)
+	// callFindMax(client)
+	callSquare(client)
 
 	// "%f"	decimal point but no exponent (số mũ), e.g. 123.456
 	// log.Printf("service client %f", client)
@@ -173,4 +176,28 @@ func callFindMax(c calculatorpb.CalculatorServiceClient) {
 	// neo chờ để tránh chương trình gọi 2 goroutine trên
 	// xong lại stop ngay lập tức
 	<-waitc
+}
+
+// section 08 - handle error
+func callSquare(c calculatorpb.CalculatorServiceClient) {
+	num := int32(-1) // Thử với số <= 0 để thử show lỗi
+
+	resp, err := c.Square(context.TODO(), &calculatorpb.SquareRequest{
+		Num: num,
+	})
+
+	if err != nil {
+		errStatus, ok := status.FromError(err)
+		if ok {
+			log.Printf("err msg: %v\n", errStatus.Message())
+			log.Printf("err code: %v\n", errStatus.Code())
+
+			if errStatus.Code() == codes.InvalidArgument {
+				log.Printf("InvalidArgument num %v\n", num)
+				return
+			}
+		}
+	}
+
+	log.Printf("square result: %v", resp.GetSquareRoot())
 }

@@ -4,12 +4,15 @@ import (
 	"context"
 	"io"
 	"log"
+	"math"
 	"net"
 	"time"
 
 	"gogrpcbasic/calculator/calculatorpb"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type server struct {
@@ -122,6 +125,24 @@ func (*server) FindMax(stream calculatorpb.CalculatorService_FindMaxServer) erro
 			return err
 		}
 	}
+}
+
+// section 08 - Handle Error
+func (*server) Square(
+	ctx context.Context,
+	req *calculatorpb.SquareRequest,
+) (*calculatorpb.SquareResponse, error) {
+	log.Println("Square() called...")
+
+	num := req.GetNum()
+	if num < 0 {
+		log.Printf("req num < 0, num=%v, return InvalidArgument", num)
+		return nil, status.Errorf(codes.InvalidArgument, "Expect num > 0, req num war %v", num)
+	}
+
+	return &calculatorpb.SquareResponse{
+		SquareRoot: math.Sqrt(float64(num)),
+	}, nil
 }
 
 func main() {

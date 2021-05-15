@@ -91,3 +91,18 @@ VD: input vào là [5,10,12,3,4.2] => kết quả là 6.48
 
 **Đề bài** tìm con số lớn nhất, client sẽ gửi lên dãy số và server trả về số lớn nhất trong dãy số đó
   - VD: client bắn liên tục dãy số [5,10,12,3,4] -> thì phía server tính toán sau mỗi lần nhận message từ client sẽ trả ra là [5,10,12,12,12]
+
+## section 08 - Handle Error (Xử lý lỗi)
+
+Video: https://www.youtube.com/watch?v=btsU8EtP2dY&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=9 
+  - Video này xử lý lỗi chi tiết các lỗi xảy ra ở các video trước khi ta đều chỉ print ra là xong
+
+- Các status code trong grpc: https://github.com/grpc/grpc/blob/master/doc/statuscodes.md 
+- Repo sample code handle err: https://github.com/avinassh/grpc-errors 
+- Video này ta sẽ làm hàm `Square` (căn bậc hai)
+- Sử dụng 2 pkg này để trả lỗi
+
+```txt
+"google.golang.org/grpc/codes"
+"google.golang.org/grpc/status"
+```
