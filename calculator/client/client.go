@@ -23,10 +23,11 @@ func main() {
 
 	// Call api from server
 	// callSum(client)
+	callSumWithDeadline(client)
 	// callPND(client)
 	// callAverage(client)
 	// callFindMax(client)
-	callSquare(client)
+	// callSquare(client)
 
 	// "%f"	decimal point but no exponent (số mũ), e.g. 123.456
 	// log.Printf("service client %f", client)
@@ -39,6 +40,38 @@ func callSum(c calculatorpb.CalculatorServiceClient) {
 		Num1: 1,
 		Num2: 2,
 	})
+
+	log.Println(resp.GetResult())
+}
+
+// # section 09 - deadline context
+func callSumWithDeadline(c calculatorpb.CalculatorServiceClient) {
+	log.Println("callSumWithDeadline() called...")
+
+	// set time max request
+	timeDeadline := time.Second * 4
+
+	ctx, cancel := context.WithTimeout(context.TODO(), timeDeadline)
+	defer cancel() // phải cancel để tránh tốn resource
+
+	resp, err := c.SumWithDeadline(ctx, &calculatorpb.SumRequest{
+		Num1: 1,
+		Num2: 2,
+	})
+
+	if err != nil {
+		if statusErr, ok := status.FromError(err); ok {
+			if statusErr.Code() == codes.DeadlineExceeded { // hết thời gian deadline
+				log.Println("calling callSumWithDeadline is DeadlineExceeded")
+			} else {
+				log.Printf("calling callSumWithDeadline err %v", err)
+			}
+		} else {
+			log.Fatalf("calling callSumWithDeadline unknown err %v", err)
+		}
+
+		return
+	}
 
 	log.Println(resp.GetResult())
 }

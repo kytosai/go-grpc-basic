@@ -106,3 +106,8 @@ Video: https://www.youtube.com/watch?v=btsU8EtP2dY&list=PLC4c48H3oDRwlqUfUYfjdWH
 "google.golang.org/grpc/codes"
 "google.golang.org/grpc/status"
 ```
+
+## Section 09 - Deadline context
+
+Video: https://www.youtube.com/watch?v=IhNd11EiXUk&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=10
+  - Cách sử dụng context deadline để xử lý request timeout trong gRPC 

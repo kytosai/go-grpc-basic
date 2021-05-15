@@ -33,6 +33,32 @@ func (*server) Sum(
 	return &resp, nil
 }
 
+// Section 09 - deadline context
+func (*server) SumWithDeadline(
+	ctx context.Context,
+	req *calculatorpb.SumRequest,
+) (*calculatorpb.SumResponse, error) {
+	log.Println("SumWithDeadline() called...")
+
+	// Giả đoạn code là có nhiều tác vụ nào đó
+	// xử lý quá nhiều chiếm nhiều thời gian trước
+	// khi response về tới client
+	for i := 0; i < 3; i++ {
+		if ctx.Err() == context.Canceled {
+			log.Println("context.Canceled...")
+			return nil, status.Errorf(codes.Canceled, "client canceled request")
+		}
+
+		time.Sleep(1 * time.Second)
+	}
+
+	resp := calculatorpb.SumResponse{
+		Result: req.GetNum1() + req.GetNum2(),
+	}
+
+	return &resp, nil
+}
+
 func (*server) PrimeNumberDecomposition(
 	req *calculatorpb.PNDRequest,
 	stream calculatorpb.CalculatorService_PrimeNumberDecompositionServer,

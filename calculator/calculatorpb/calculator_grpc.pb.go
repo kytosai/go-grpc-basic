@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CalculatorServiceClient interface {
 	Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error)
+	SumWithDeadline(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error)
 	PrimeNumberDecomposition(ctx context.Context, in *PNDRequest, opts ...grpc.CallOption) (CalculatorService_PrimeNumberDecompositionClient, error)
 	Average(ctx context.Context, opts ...grpc.CallOption) (CalculatorService_AverageClient, error)
 	FindMax(ctx context.Context, opts ...grpc.CallOption) (CalculatorService_FindMaxClient, error)
@@ -36,6 +37,15 @@ func NewCalculatorServiceClient(cc grpc.ClientConnInterface) CalculatorServiceCl
 func (c *calculatorServiceClient) Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error) {
 	out := new(SumResponse)
 	err := c.cc.Invoke(ctx, "/calculator.CalculatorService/Sum", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *calculatorServiceClient) SumWithDeadline(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error) {
+	out := new(SumResponse)
+	err := c.cc.Invoke(ctx, "/calculator.CalculatorService/SumWithDeadline", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -153,6 +163,7 @@ func (c *calculatorServiceClient) Square(ctx context.Context, in *SquareRequest,
 // for forward compatibility
 type CalculatorServiceServer interface {
 	Sum(context.Context, *SumRequest) (*SumResponse, error)
+	SumWithDeadline(context.Context, *SumRequest) (*SumResponse, error)
 	PrimeNumberDecomposition(*PNDRequest, CalculatorService_PrimeNumberDecompositionServer) error
 	Average(CalculatorService_AverageServer) error
 	FindMax(CalculatorService_FindMaxServer) error
@@ -166,6 +177,9 @@ type UnimplementedCalculatorServiceServer struct {
 
 func (UnimplementedCalculatorServiceServer) Sum(context.Context, *SumRequest) (*SumResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Sum not implemented")
+}
+func (UnimplementedCalculatorServiceServer) SumWithDeadline(context.Context, *SumRequest) (*SumResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SumWithDeadline not implemented")
 }
 func (UnimplementedCalculatorServiceServer) PrimeNumberDecomposition(*PNDRequest, CalculatorService_PrimeNumberDecompositionServer) error {
 	return status.Errorf(codes.Unimplemented, "method PrimeNumberDecomposition not implemented")
@@ -206,6 +220,24 @@ func _CalculatorService_Sum_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CalculatorServiceServer).Sum(ctx, req.(*SumRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CalculatorService_SumWithDeadline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SumRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalculatorServiceServer).SumWithDeadline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/calculator.CalculatorService/SumWithDeadline",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalculatorServiceServer).SumWithDeadline(ctx, req.(*SumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -311,6 +343,10 @@ var CalculatorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Sum",
 			Handler:    _CalculatorService_Sum_Handler,
+		},
+		{
+			MethodName: "SumWithDeadline",
+			Handler:    _CalculatorService_SumWithDeadline_Handler,
 		},
 		{
 			MethodName: "Square",
