@@ -111,3 +111,10 @@ Video: https://www.youtube.com/watch?v=btsU8EtP2dY&list=PLC4c48H3oDRwlqUfUYfjdWH
 
 Video: https://www.youtube.com/watch?v=IhNd11EiXUk&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=10
   - Cách sử dụng context deadline để xử lý request timeout trong gRPC 
+
+## Section 10 - SSL
+
+Video: https://www.youtube.com/watch?v=RUqu7cFF8dI&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=11 
+Doc: https://grpc.io/docs/guides/auth/ 
+
+!!! HIỆN TẠI CHƯA THỂ XÁC THỰC ĐƯỢC CẦN THỬ LẠI SAU

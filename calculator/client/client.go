@@ -9,11 +9,20 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
 )
 
 func main() {
-	clientConn, err := grpc.Dial("localhost:50069", grpc.WithInsecure())
+	// Setup TSL/SSL
+	certFile := "ssl/ca.crt"
+	creds, sslErr := credentials.NewClientTLSFromFile(certFile, "")
+	if sslErr != nil {
+		log.Fatalf("create cred ssl err %v\n", sslErr)
+		return
+	}
+
+	clientConn, err := grpc.Dial("localhost:50069", grpc.WithTransportCredentials(creds))
 	if err != nil {
 		log.Fatalf("err while dial %v", err)
 	}
@@ -22,8 +31,8 @@ func main() {
 	client := calculatorpb.NewCalculatorServiceClient(clientConn)
 
 	// Call api from server
-	// callSum(client)
-	callSumWithDeadline(client)
+	callSum(client)
+	// callSumWithDeadline(client)
 	// callPND(client)
 	// callAverage(client)
 	// callFindMax(client)
@@ -36,10 +45,14 @@ func main() {
 }
 
 func callSum(c calculatorpb.CalculatorServiceClient) {
-	resp, _ := c.Sum(context.TODO(), &calculatorpb.SumRequest{
+	resp, err := c.Sum(context.TODO(), &calculatorpb.SumRequest{
 		Num1: 1,
 		Num2: 2,
 	})
+
+	if err != nil {
+		log.Fatalf("callSum() err %v", err)
+	}
 
 	log.Println(resp.GetResult())
 }
