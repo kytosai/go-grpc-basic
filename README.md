@@ -111,3 +111,9 @@ Video: https://www.youtube.com/watch?v=btsU8EtP2dY&list=PLC4c48H3oDRwlqUfUYfjdWH
 
 Video: https://www.youtube.com/watch?v=IhNd11EiXUk&list=PLC4c48H3oDRwlqUfUYfjdWH-d2uEanRpr&index=10
   - Cách sử dụng context deadline để xử lý request timeout trong gRPC 
+
+## Section 12 - RESTfull JSON HTTP API bằng gRPC Gateway 
+
+- Source repo: https://github.com/nkchuong1607/demo_grpc_gateway 
+- gRPC Gateway repo: https://github.com/grpc-ecosystem/grpc-gateway 
+- Google api repo: https://github.com/googleapis/googleapis/tree/master/google 
